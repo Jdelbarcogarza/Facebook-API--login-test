@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -6,9 +7,47 @@ export default function Home() {
 
   const onLoginClick = () => {
     window.FB.login(function(response) {
-      console.log("aqui hago un handle de la response")
+      console.log("aqui hago un handle de la response");
+      
     }, {scope: 'ads_read,ads_management'});
+
+    console.log('va funcion de login status:');
+    window.FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        // The user is logged in and has authenticated your
+        // app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed
+        // request, and the time the access token 
+        // and signed request each expire.
+        console.log('si se conecto el usuario.')
+        var uid = response.authResponse.userID;
+        var accessToken = response.authResponse.accessToken;
+        
+        console.log('este es el access token con el que jugamos', accessToken);
+        console.log('este es el id del usuario', uid);
+    
+      } else if (response.status === 'not_authorized') {
+        // The user hasn't authorized your application.  They
+        // must click the Login button, or you must call FB.login
+        // in response to a user gesture, to launch a login dialog.
+      } else {
+        // The user isn't logged in to Facebook. You can launch a
+        // login dialog with a user gesture, but the user may have
+        // to log in to Facebook before authorizing your application.
+      }
+     });
+
 };
+
+
+
+ const makeGetRequest = () => {
+
+ FB.api('me/adaccounts', 'get', {field: 'name'}, function(response){
+  console.log(response)
+} )
+
+ }
 
 
   return (
@@ -25,6 +64,9 @@ export default function Home() {
         </h1>
 
         <div><button onClick={onLoginClick}>Login with Facebook</button></div>
+
+
+        <div><button onClick={makeGetRequest}>Make get request</button></div>
 
         <p className={styles.description}>
           Get started by editing{' '}
