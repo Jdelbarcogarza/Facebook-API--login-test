@@ -3,6 +3,14 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+
+  const onLoginClick = () => {
+    window.FB.login(function(response) {
+      console.log("aqui hago un handle de la response")
+    }, {scope: 'ads_read,ads_management'});
+};
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +23,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <div><button onClick={onLoginClick}>Login with Facebook</button></div>
 
         <p className={styles.description}>
           Get started by editing{' '}
