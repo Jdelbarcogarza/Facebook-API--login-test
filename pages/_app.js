@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     window.fbAsyncInit = function() {
       FB.init({
-        appId            : '5165160323575830', // esto se va a poner en un .env
+        appId            : process.env.APP_ID, // esto se va a poner en un .env
         autoLogAppEvents : true,
         xfbml            : true,
         version          : 'v14.0'
